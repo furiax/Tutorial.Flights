@@ -1,5 +1,6 @@
 ﻿using Flights.ReadModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Flights.Controllers
 {
@@ -11,17 +12,11 @@ namespace Flights.Controllers
 
 		private readonly ILogger<FlightController> _logger;
 
-		public FlightController(ILogger<FlightController> logger)
+		static Random random = new Random();
+
+		static private FlightRm[] flights = new FlightRm[]
 		{
-			_logger = logger;
-		}
-
-		Random random = new Random();
-
-		[HttpGet]
-		public IEnumerable<FlightRm> Search()
-		=> new FlightRm[]
-		{new (   Guid.NewGuid(),
+			new (   Guid.NewGuid(),
 				"American Airlines",
 				random.Next(90, 5000).ToString(),
 				new TimePlaceRm("Los Angeles",DateTime.Now.AddHours(random.Next(1, 3))),
@@ -40,7 +35,7 @@ namespace Flights.Controllers
 				new TimePlaceRm("Vizzola-Ticino",DateTime.Now.AddHours(random.Next(4, 18))),
 					random.Next(1, 853)),
 		new (   Guid.NewGuid(),
-				"Basiq Air",
+			"Basiq Air",
 				random.Next(90, 5000).ToString(),
 				new TimePlaceRm("Amsterdam",DateTime.Now.AddHours(random.Next(1, 21))),
 				new TimePlaceRm("Glasgow, Scotland",DateTime.Now.AddHours(random.Next(4, 21))),
@@ -58,7 +53,7 @@ namespace Flights.Controllers
 				new TimePlaceRm("Warsaw",DateTime.Now.AddHours(random.Next(4, 19))),
 					random.Next(1, 853)),
 		new (   Guid.NewGuid(),
-				"ABA Air",
+			"ABA Air",
 				random.Next(90, 5000).ToString(),
 				new TimePlaceRm("Praha Ruzyne",DateTime.Now.AddHours(random.Next(1, 55))),
 				new TimePlaceRm("Paris",DateTime.Now.AddHours(random.Next(4, 58))),
@@ -71,6 +66,17 @@ namespace Flights.Controllers
 					random.Next(1, 853))
 
 		};
+		public FlightController(ILogger<FlightController> logger)
+		{
+			_logger = logger;
+		}
 
+		[HttpGet]
+		public IEnumerable<FlightRm> Search()
+		=> flights;
+
+		[HttpGet("{id}")]
+		public FlightRm Find(Guid id)
+		=> flights.SingleOrDefault(f => f.Id == id);
 	}
 }
