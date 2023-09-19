@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FlightService } from './../api/services/flight.service';
+import { FlightRm } from '../api/models';
 
 @Component({
   selector: 'app-search-flights',
@@ -7,39 +9,12 @@ import { Component } from '@angular/core';
 })
 export class SearchFlightsComponent {
 
-  searchResult: FlightRm[] = [
-    {
-      airline: "American Airlines",
-      remainingNumberOfSeats: 500,
-      departure: { time: Date.now().toString(), place: "Los Angeles" },
-      arrival: { time: Date.now().toString(), place: "Istanbul" },
-      price: "350",
-    },
-    {
-      airline: "Deutsche BA",
-      remainingNumberOfSeats: 60,
-      departure: { time: Date.now().toString(), place: "Munchen" },
-      arrival: { time: Date.now().toString(), place: "Schiphol" },
-      price: "600",
-    },
-    {
-      airline: "British Airways",
-      remainingNumberOfSeats: 60,
-      departure: { time: Date.now().toString(), place: "London, England" },
-      arrival: { time: Date.now().toString(), place: "Vizzola-Ticino" },
-      price: "600",
-    }
-  ]
-}
+  searchResult: FlightRm[] = []
 
-export interface FlightRm {
-  airline: string;
-  arrival: TimePlaceRm;
-  departure: TimePlaceRm;
-  price: string;
-  remainingNumberOfSeats: number;
-}
-export interface TimePlaceRm {
-  place: string;
-  time: string;
+  constructor(private flightService: FlightService) { }
+
+  search() {
+    this.flightService.flightGet({})
+    .subscribe(response => this.searchResult = response)
+  }
 }
