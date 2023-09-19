@@ -18,6 +18,9 @@ export class SearchFlightsComponent {
     .subscribe(response => this.searchResult = response, this.handleError)
   }
   private handleError(err: any) {
+    console.log("Response Error. Status: ", err.status)
+
+    console.log("Response Error. Status Text: ", err.statusText)
     console.log(err)
   }
 }
