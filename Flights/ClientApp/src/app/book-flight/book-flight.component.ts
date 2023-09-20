@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from './../api/services/flight.service';
 import { FlightRm } from '../api/models';
-import { AuthService } from '../auth/auth.service'
+import { AuthService } from '../auth/auth.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -14,10 +15,15 @@ export class BookFlightComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private flightService: FlightService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private fb : FormBuilder) { }
 
   flightId: string = 'not loaded'
   flight: FlightRm = {}
+
+  form = this.fb.group({
+    number: [1]
+  })
 
 ngOnInit(): void {
 
@@ -48,4 +54,7 @@ ngOnInit(): void {
     console.log(err)
   }
 
+  book() {
+    console.log( `Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`)
+  }
 }
