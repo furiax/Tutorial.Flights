@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Flights.Dtos;
+using Flights.ReadModels;
 
 namespace Flights.Controllers
 {
@@ -19,7 +20,26 @@ namespace Flights.Controllers
 		{
 			Passengers.Add(dto);
 			System.Diagnostics.Debug.WriteLine(Passengers.Count);
-			return Ok();
+			return CreatedAtAction(nameof(Find), new { email = dto.Email});
+		}
+
+		[HttpGet("{email")]
+		public ActionResult<PassengerRm> Find(string email)
+		{
+			var passenger  = Passengers.FirstOrDefault(p => p.Email == email);
+
+			if (passenger == null)
+			{
+				return NotFound();
+			}
+
+			var rm = new PassengerRm(
+				passenger.Email,
+				passenger.FirstName,
+				passenger.LastName,
+				passenger.Gender);
+
+			return Ok(rm);
 		}
 	}
 }
