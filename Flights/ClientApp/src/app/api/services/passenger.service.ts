@@ -9,6 +9,11 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { findPassenger } from '../fn/passenger/find-passenger';
+import { FindPassenger$Params } from '../fn/passenger/find-passenger';
+import { findPassenger$Plain } from '../fn/passenger/find-passenger-plain';
+import { FindPassenger$Plain$Params } from '../fn/passenger/find-passenger-plain';
+import { PassengerRm } from '../models/passenger-rm';
 import { registerPassenger } from '../fn/passenger/register-passenger';
 import { RegisterPassenger$Params } from '../fn/passenger/register-passenger';
 
@@ -40,6 +45,53 @@ export class PassengerService extends BaseService {
   registerPassenger(params?: RegisterPassenger$Params, context?: HttpContext): Observable<void> {
     return this.registerPassenger$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
+    );
+  }
+
+  /** Path part for operation `findPassenger()` */
+  static readonly FindPassengerPath = '/Passenger/{email}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findPassenger$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findPassenger$Plain$Response(params: FindPassenger$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<PassengerRm>> {
+    return findPassenger$Plain(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findPassenger$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findPassenger$Plain(params: FindPassenger$Plain$Params, context?: HttpContext): Observable<PassengerRm> {
+    return this.findPassenger$Plain$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PassengerRm>): PassengerRm => r.body)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `findPassenger()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findPassenger$Response(params: FindPassenger$Params, context?: HttpContext): Observable<StrictHttpResponse<PassengerRm>> {
+    return findPassenger(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findPassenger$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findPassenger(params: FindPassenger$Params, context?: HttpContext): Observable<PassengerRm> {
+    return this.findPassenger$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PassengerRm>): PassengerRm => r.body)
     );
   }
 

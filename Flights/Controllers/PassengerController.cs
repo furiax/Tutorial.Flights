@@ -20,10 +20,10 @@ namespace Flights.Controllers
 		{
 			Passengers.Add(dto);
 			System.Diagnostics.Debug.WriteLine(Passengers.Count);
-			return CreatedAtAction(nameof(Find), new { email = dto.Email});
+			return CreatedAtAction(nameof(Find), new { email = dto.Email });
 		}
 
-		[HttpGet("{email")]
+		[HttpGet("{email}")]
 		public ActionResult<PassengerRm> Find(string email)
 		{
 			var passenger  = Passengers.FirstOrDefault(p => p.Email == email);
