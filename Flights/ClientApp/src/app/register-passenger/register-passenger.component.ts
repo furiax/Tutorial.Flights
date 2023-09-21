@@ -16,7 +16,7 @@ export class RegisterPassengerComponent implements OnInit {
     private router: Router) { }
 
   form = this.fb.group({
-    email: ['', Validators.compose([Validators.required, Validators.maxLength (254), Validators.minLength(3)])],
+    email: ['', Validators.compose([Validators.required, Validators.maxLength (100), Validators.minLength(3), Validators.email])],
     firstName: ['', Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(2)])],
     lastName: ['', Validators.compose([Validators.required, Validators.maxLength(35), Validators.minLength(2)])],
     isFemale: [true, Validators.required]

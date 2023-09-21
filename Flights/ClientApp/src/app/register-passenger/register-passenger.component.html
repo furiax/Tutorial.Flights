@@ -5,7 +5,7 @@
       <label for="email">Email</label>
 
       <div class="invalid-feedback d-block"
-           *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">
+           *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched) && form.controls.email.errors?.email">
         <div *ngIf="form.controls.email.errors">
           Email is invalid
         </div>
@@ -22,7 +22,7 @@
              *ngIf="form.controls.firstName.invalid && (form.controls.firstName.dirty || form.controls.firstName.touched)">
 
           <div *ngIf="form.controls.firstName.errors">
-            First name is invalid
+            First name is invalid (must be atleast 2 and maximum 35 chars)
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
 
         <div class="invalid-feedback d-block" *ngIf="form.controls.lastName.invalid && (form.controls.lastName.dirty || form.controls.lastName.touched)">
           <div *ngIf="form.controls.lastName.errors">
-            Last name is invalid
+            Last name is invalid (must be atleast 2 and maximum 35 chars)
           </div>
 
         </div>
