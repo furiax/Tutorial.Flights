@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightService } from './../api/services/flight.service';
-import { FlightRm } from '../api/models';
+import { BookDto, FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
 import { FormBuilder } from '@angular/forms';
 
@@ -55,6 +55,15 @@ ngOnInit(): void {
   }
 
   book() {
-    console.log( `Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`)
+    console.log(`Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`)
+
+    const booking : BookDto = {
+      flightId: this.flight.id,
+      passengerEmail: this.authService.currentUser?.email,
+      numberOfSeats: this.form.get('number')?.value
+    }
+
+    this.flightService.bookFlight({ body: booking })
+    .subscribe(_ => this.router.navigate(['/my-bookings']), this.handleError)
   }
 }
