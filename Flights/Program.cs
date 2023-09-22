@@ -80,7 +80,7 @@ Flight[] flightsToSeed = new Flight[]
 					random.Next(1, 853))
 };
 entities.Flights.AddRange(flightsToSeed);
-
+entities.SaveChanges();
 
 app.UseCors(builder => builder
 .WithOrigins("*")
