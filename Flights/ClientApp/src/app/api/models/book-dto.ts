@@ -2,6 +2,6 @@
 /* eslint-disable */
 export interface BookDto {
   flightId?: string;
-  numberOfSeats?: null |number;
+  numberOfSeats?: null | number;
   passengerEmail?: null | string;
 }
