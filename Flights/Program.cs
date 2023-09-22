@@ -1,8 +1,14 @@
 using Microsoft.OpenApi.Models;
 using Flights.Data;
 using Flights.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Add db context
+builder.Services.AddDbContext<Entities>(options =>
+	options.UseInMemoryDatabase(databaseName: "Flights"),
+	ServiceLifetime.Singleton);
 
 // Add services to the container.
 
