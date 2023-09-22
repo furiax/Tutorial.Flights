@@ -7,8 +7,8 @@ namespace Flights.ReadModels
 		Guid FlightId,
 		string Airline,
 		string Price,
-		TimePlace Arrival,
-		TimePlace Departure,
+		TimePlaceRm Arrival,
+		TimePlaceRm Departure,
 		int NumberOfBookedSeats,
 		string PassengerEmail
 		);
