@@ -10,6 +10,8 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { BookingRm } from '../models/booking-rm';
+import { cancelBooking } from '../fn/booking/cancel-booking';
+import { CancelBooking$Params } from '../fn/booking/cancel-booking';
 import { listBooking } from '../fn/booking/list-booking';
 import { ListBooking$Params } from '../fn/booking/list-booking';
 import { listBooking$Plain } from '../fn/booking/list-booking-plain';
@@ -65,6 +67,31 @@ export class BookingService extends BaseService {
   listBooking(params: ListBooking$Params, context?: HttpContext): Observable<Array<BookingRm>> {
     return this.listBooking$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<BookingRm>>): Array<BookingRm> => r.body)
+    );
+  }
+
+  /** Path part for operation `cancelBooking()` */
+  static readonly CancelBookingPath = '/Booking';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cancelBooking()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  cancelBooking$Response(params?: CancelBooking$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return cancelBooking(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cancelBooking$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  cancelBooking(params?: CancelBooking$Params, context?: HttpContext): Observable<void> {
+    return this.cancelBooking$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
