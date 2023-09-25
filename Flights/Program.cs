@@ -40,7 +40,7 @@ if (!entities.Flights.Any())
 				random.Next(90, 5000).ToString(),
 				new TimePlace("Los Angeles",DateTime.Now.AddHours(random.Next(1, 3))),
 				new TimePlace("Istanbul",DateTime.Now.AddHours(random.Next(4, 10))),
-					2),
+					random.Next(1, 853)),
 		new (   Guid.NewGuid(),
 				"Deutsche BA",
 				random.Next(90, 5000).ToString(),
